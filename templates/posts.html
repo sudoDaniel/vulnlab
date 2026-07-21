@@ -4,15 +4,34 @@
 <table border="1">
     <thead>
         <tr>
-            {% for column in columns %}
+            {% for column in post_df_columns %}
                 <th>{{ column }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
-        {% for row in rows %}
+        {% for row in post_df_rows %}
             <tr>
-                {% for column in columns %}
+                {% for column in post_df_columns %}
+                    <td>{{ row[column] }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</br>
+<table border="1">
+    <thead>
+        <tr>
+            {% for column in comments_df_columns %}
+                <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in comments_df_rows %}
+            <tr>
+                {% for column in comments_df_columns %}
                     <td>{{ row[column] }}</td>
                 {% endfor %}
             </tr>

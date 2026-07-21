@@ -30,11 +30,14 @@ def get_all(conn=conn):
 @app.route("/posts/<int:post_id>")
 def get_detailed_post(post_id: int):
     # return "a single post's detail page: the post itself, plus all its comments and each comment's author"
-    df = get_post_by_id(conn=conn, post_id=post_id)
+    post_df = get_post_by_id(conn=conn, post_id=post_id)
+    comments_df = get_comments_for_post(conn=conn, post_id=post_id)
     return render_template(
         "posts.html",
-        columns=df.columns.tolist(),
-        rows=df.to_dict(orient="records"),
+        post_df_columns=post_df.columns.tolist(),
+        post_df_rows=post_df.to_dict(orient="records"),
+        comments_df_columns=comments_df.columns.tolist(),
+        comments_df_rows=comments_df.to_dict(orient="records"),
     )
 
 

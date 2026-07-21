@@ -102,7 +102,7 @@ JOIN users ON posts.author_id = users.id;
     data = []  # empty list, create a matrix of lists for the data
     for row in c.fetchall():
         data.append(list(row))
-    # logger.debug(f"Found {len(data)} posts.")
+    logger.debug(f"Found {len(data)} posts.")
     df = pd.DataFrame(
         data, columns=["Title", "Username", "Timestamp"]
     )
@@ -129,15 +129,40 @@ def get_post_by_id(conn: sqlite3.Connection, post_id: int):
             "Timestamp",
         ],
     )
-    print("POST DATAFRAME:")
-    print(df)
+
+    if df.empty:
+        logger.warning("DataFrame is empty, post doesn't exist.")
+
     conn.commit()
     return df
 
 
 def get_comments_for_post(conn: sqlite3.Connection, post_id):
     logger.debug("Fetching comments on post_id: {}", post_id)
-    pass
+    c = conn.cursor()
+    c.execute(
+        """
+    SELECT
+        comments.body,
+        users.username
+    FROM comments
+    JOIN users
+        ON comments.author_id = users.id
+    WHERE comments.post_id = ?;
+    """,
+        (post_id,),
+    )
+
+    data = []
+    for row in c.fetchall():
+        data.append(list(row))
+
+    df = pd.DataFrame(
+        data,
+        columns=["Comment", "Author"],
+    )
+    conn.commit()
+    return df
 
 
 def get_user_by_id(conn: sqlite3.Connection, user_id: int):
