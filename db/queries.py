@@ -15,7 +15,6 @@ def create_user(
     logger.debug("Creating user {}", username)
 
     c = conn.cursor()
-    logger.debug("Attempting to insert to database...")
     c.execute(
         "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
         (username, email, password_hash),
@@ -69,7 +68,7 @@ def create_comment(
 
 
 def query(conn: sqlite3.Connection, query: str):
-    logger.debug("Executing Query:")
+    logger.debug("Executing Query:\n")
     print(f"\n{query}\n")
     c = conn.cursor()
     c.execute(query)

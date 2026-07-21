@@ -10,7 +10,7 @@ DB_PATH = "db/vulnlab.db"
 def get_connection(db_path=DB_PATH):
     try:
         conn = sqlite3.connect(db_path)
-        # Enable enforcing foreign keys for every new connection
+
         conn.execute("PRAGMA foreign_keys = ON")
         return conn
     except sqlite3.Error as e:
