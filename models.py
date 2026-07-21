@@ -1,5 +1,10 @@
-from werkzeug.security import check_password_hash, generate_password_hash
+# models.py
 from datetime import datetime
+
+from werkzeug.security import (
+    check_password_hash,
+    generate_password_hash,
+)
 
 
 class User:
@@ -15,11 +20,20 @@ class User:
         return f"User(username={self.username}, email={self.email})"
 
     def __repr__(self):
-        return f"User(username={self.username!r}, " f"email={self.email!r})"
+        return (
+            f"User(username={self.username!r}, email={self.email!r})"
+        )
 
 
 class Post:
-    def __init__(self, title: str, body: str, author: User, id: int, created_at=None):
+    def __init__(
+        self,
+        title: str,
+        body: str,
+        author: User,
+        id: int,
+        created_at=None,
+    ):
         self.title = title
         self.body = body
         self.author = author
@@ -31,15 +45,18 @@ class Post:
             self.created_at = datetime.now()
 
     def __repr__(self):
-        return (
-            f"Post(title={self.title!r}, "
-            f"author={self.author!r}, "
-            f"id={self.id!r})"
-        )
+        return f"Post(title={self.title!r}, author={self.author!r}, id={self.id!r})"
 
 
 class Comment:
-    def __init__(self, body: str, author: User, post: Post, id: int, created_at=None):
+    def __init__(
+        self,
+        body: str,
+        author: User,
+        post: Post,
+        id: int,
+        created_at=None,
+    ):
         self.body = body
         self.author = author
         self.post = post
@@ -59,16 +76,16 @@ class Comment:
         )
 
 
-my_user = User("Daniel", "dan@man.com", "123")
-other_user = User("Ane", "ane@ane.com", "123")
-my_post = Post("Hello!", "I love cats", author=my_user, id=1)
-comment = Comment("LOL", other_user, my_post, 1)
+# my_user = User("Daniel", "dan@man.com", "123")
+# other_user = User("Ane", "ane@ane.com", "123")
+# my_post = Post("Hello!", "I love cats", author=my_user, id=1)
+# comment = Comment("LOL", other_user, my_post, 1)
 # print(my_post)
 # print(comment)
-my_username = my_user.username
-comment = comment
-commentator = comment.author
-print(my_username)
-print(my_post)
-print(comment)
-print(commentator)
+# my_username = my_user.username
+# comment = comment
+# commentator = comment.author
+# print(my_username)
+# print(my_post)
+# print(comment)
+# print(commentator)

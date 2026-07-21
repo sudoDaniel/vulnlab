@@ -1,8 +1,8 @@
+# db/connect_db.py
 import sqlite3
 from pathlib import Path
-from loguru import logger
 
-from queries import create_comment, create_post, create_user
+from loguru import logger
 
 DB_PATH = "db/vulnlab.db"
 
@@ -20,6 +20,7 @@ def get_connection(db_path=DB_PATH):
 
 def create_tables(conn, c):
     schema = Path("db/schema.sql").read_text()
+    logger.debug("Creating tables...")
     c.executescript(schema)
     conn.commit()
 
@@ -30,10 +31,3 @@ def connect_db(db_path=DB_PATH):
     c = conn.cursor()
     create_tables(conn=conn, c=c)
     return conn
-
-
-conn = connect_db(db_path=DB_PATH)
-
-# user_1 = create_user(conn, username="Daniel", email="gay", password_hash="123")
-# user_2 = create_user(conn, username="Ane", email="gay", password_hash="123")
-# post_1 = create_post(conn, title="Hallo", body="Eva", author_id=)

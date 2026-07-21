@@ -1,0 +1,11 @@
+[tool.ruff]
+line-length = 70
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501", "F401"]
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
