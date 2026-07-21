@@ -2,6 +2,7 @@
 import sqlite3
 from datetime import datetime
 
+import pandas as pd
 from loguru import logger
 
 
@@ -14,7 +15,9 @@ def query(conn: sqlite3.Connection, query: str):
     for row in c.fetchall():
         print(row)
 
+    result = c.fetchall()
     conn.commit()
+    return result
 
 
 """ CREATING USERS, POSTS AND COMMENTS """
@@ -86,13 +89,50 @@ def create_comment(
 
 
 def get_all_posts(conn: sqlite3.Connection):
+    # Retrieves post title, username, created_at
     logger.debug("Fetching all posts in the database")
-    pass
+    c = conn.cursor()
+    c.execute("""SELECT
+    posts.title,
+    users.username,
+    posts.created_at
+FROM posts
+JOIN users ON posts.author_id = users.id;
+""")
+    data = []  # empty list, create a matrix of lists for the data
+    for row in c.fetchall():
+        data.append(list(row))
+    # logger.debug(f"Found {len(data)} posts.")
+    df = pd.DataFrame(
+        data, columns=["Title", "Username", "Timestamp"]
+    )
+    conn.commit()
+
+    return df
 
 
 def get_post_by_id(conn: sqlite3.Connection, post_id: int):
     logger.debug("Fetching details on post_id: {}", post_id)
-    pass
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts where id = ?", (post_id,))
+    data = []
+    for row in c.fetchall():
+        data.append(list(row))
+
+    df = pd.DataFrame(
+        data,
+        columns=[
+            "Post_id",
+            "Title",
+            "Body",
+            "Author_id",
+            "Timestamp",
+        ],
+    )
+    print("POST DATAFRAME:")
+    print(df)
+    conn.commit()
+    return df
 
 
 def get_comments_for_post(conn: sqlite3.Connection, post_id):

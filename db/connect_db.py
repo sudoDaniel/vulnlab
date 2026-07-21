@@ -4,14 +4,17 @@ from pathlib import Path
 
 from loguru import logger
 
-DB_PATH = "db/vulnlab.db"
+# DB_PATH = "db/vulnlab.db"
 
 
-def get_connection(db_path=DB_PATH):
+def get_connection(db_path, check_same_thread=False):
     try:
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect(
+            db_path, check_same_thread=check_same_thread
+        )
 
         conn.execute("PRAGMA foreign_keys = ON")
+
         return conn
     except sqlite3.Error as e:
         logger.error(f"Connection error: {e}")
@@ -25,7 +28,7 @@ def create_tables(conn, c):
     conn.commit()
 
 
-def connect_db(db_path=DB_PATH):
+def connect_db(db_path):
     logger.info(f"Connecting to {db_path}...")
     conn = get_connection(db_path)
     c = conn.cursor()
