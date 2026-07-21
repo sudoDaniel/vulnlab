@@ -4,7 +4,13 @@ import sys
 from loguru import logger
 
 from db.connect_db import connect_db
-from db.queries import create_comment, create_post, create_user, query
+from db.queries import (
+    create_comment,
+    create_post,
+    create_user,
+    get_all_posts,
+    query,
+)
 from models import User
 from utils import delete_all_tables, display_tables
 
@@ -60,4 +66,16 @@ get_comments_and_posts_with_author = """SELECT comments.body, posts.title, users
 FROM comments
 JOIN posts ON comments.post_id = posts.id
 JOIN users ON comments.author_id = users.id;"""
-query(conn, get_comments_and_posts_with_author)
+
+get_all_posts = """SELECT
+    posts.title,
+    users.username,
+    posts.created_at
+FROM posts
+JOIN users ON posts.author_id = users.id;
+"""
+
+query(conn, get_all_posts)
+
+
+# get_all_posts(conn=conn)
