@@ -56,8 +56,8 @@ display_tables(conn)
 # JOIN posts ON comments.post_id = posts.id;"""
 # query(conn, get_comments_and_posts)
 
-# get_comments_and_posts_with_author = """SELECT comments.body, posts.title, users.username
-# FROM comments
-# JOIN posts ON comments.post_id = posts.id
-# JOIN users ON comments.author_id = users.id;"""
-# query(conn, get_comments_and_posts_with_author)
+get_comments_and_posts_with_author = """SELECT comments.body, posts.title, users.username
+FROM comments
+JOIN posts ON comments.post_id = posts.id
+JOIN users ON comments.author_id = users.id;"""
+query(conn, get_comments_and_posts_with_author)

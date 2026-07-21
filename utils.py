@@ -35,7 +35,7 @@ def display_tables(conn: sqlite3.Connection):
 
         cursor = conn.execute(f"SELECT * FROM {table}")
 
-        # Column names
+        # Columns
         print([description[0] for description in cursor.description])
 
         # Rows
