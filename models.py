@@ -59,9 +59,16 @@ class Comment:
         )
 
 
-daniel = User("Daniel", "dan@man.com", "123")
-ane = User("Ane", "ane@ane.com", "123")
-my_post = Post("Hello!", "I love cats", author=daniel, id=1)
-comment = Comment("LOL", ane, my_post, 1)
+my_user = User("Daniel", "dan@man.com", "123")
+other_user = User("Ane", "ane@ane.com", "123")
+my_post = Post("Hello!", "I love cats", author=my_user, id=1)
+comment = Comment("LOL", other_user, my_post, 1)
+# print(my_post)
+# print(comment)
+my_username = my_user.username
+comment = comment
+commentator = comment.author
+print(my_username)
 print(my_post)
 print(comment)
+print(commentator)

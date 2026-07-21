@@ -15,6 +15,7 @@ def create_post(conn, title: str, body: str, author_id: int, created_at):
         (title, body, author_id, created_at),
     )
     conn.commit()
+
     return c.lastrowid
 
 

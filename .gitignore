@@ -5,5 +5,5 @@ venv/
 .venv/
 .DS_Store
 
-# draft
-.schema.md
+pyproject.toml
+
